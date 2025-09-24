@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Jonel</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
+
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(180deg, #90d6ff, #e7f3f8);
+    font-family: "Segoe UI", sans-serif;
+    overflow: hidden;
+  }
+
+  .bg-marquee {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .marquee-img {
+    position: absolute;
+    width: 120px;
+    pointer-events: none;
+    opacity: 0.85;
+    transition: transform linear;
+  }
+
+  .win {
+    width: 650px;
+    min-height: 420px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(10,20,40,0.25);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 3px solid #ff0202cc;
+    z-index: 1;
+  }
+
+  .titlebar {
+    height: 45px;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    background: linear-gradient(180deg, #ff0202cc, #c70000);
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: "Comic Neue", "Comic Sans MS", cursive;
+  }
+
+  .content {
+    flex: 1;
+    padding: 28px 28px 28px 80px; /* add left padding for margin line */
+    font-size: 16px;
+    color: #222;
+    position: relative;
+    font-family: "Comic Neue", "Comic Sans MS", cursive;
+
+    /* Notebook paper effect */
+    background: repeating-linear-gradient(
+      to bottom,
+      #ffffff 0px,
+      #ffffff 23px,
+      #a3c7ff 24px
+    );
+    background-size: 100% 24px;
+    line-height: 24px;
+  }
+
+  /* Red margin line */
+  .content::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 60px;
+    width: 2px;
+    background: #ff6666;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 14px 20px;
+    background: #008f00f8;
+    border-top: 2px solid #367005;
+  }
+
+  .btn {
+    padding: 10px 22px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    background: linear-gradient(180deg, #ffd966, #e6b800);
+    color: #333;
+  }
+
+  .btn:active {
+    transform: translateY(1px);
+  }
+
+  .snoopy {
+    position: absolute;
+    bottom: 0.11px;
+    right: 15px;
+    width: 150px;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- Background music -->
+<audio id="bg-music" src="Be With You - The Ridleys Karaoke (1).mp3" loop></audio>
+
+<!-- Moving background -->
+<div class="bg-marquee" id="bg-marquee"></div>
+
+<div class="win" id="installer">
+  <div class="titlebar">Di ko alam</div>
+  <div class="content" id="page-content">
+    <h1 style="font-size:55px;">To: Jonel </h1>
+    <h1 style="font-size:55px;">From: Karl </h1>
+    <img src="sny.png" alt="Snoopy" class="snoopy">
+  </div>
+  <div class="buttons">
+    <button class="btn" onclick="prevPage()">◀ Previous</button>
+    <button class="btn" onclick="nextPage()">Next ▶</button>
+    <button class="btn" id="play-music-btn" onclick="playMusic()">Play Music ▶</button>
+  </div>
+</div>
+
+<script>
+let page = 1;
+
+function showPage() {
+  const content = document.getElementById("page-content");
+  switch(page){
+    case 1:
+      content.innerHTML = `
+        <h1 style="font-size:55px;">To: Jonel </h1>
+        <h1 style="font-size:55px;">From: Karl </h1>
+        <img src="sny.png" alt="Snoopy" class="snoopy">
+      `;
+      break;
+    case 2:
+      content.innerHTML = `
+        <h2>🐾</h2>
+        <h4>I just wanna say I’m really glad with the way you handle all the problems and school stuff. I’ve been thinking about you a lot—it’s been 10 months since I started liking you hahaha. Moving on hasn’t been easy, but honestly, you’re worth waiting for. Every time I see you, it feels like the universe is reminding me to just wait and not <br> rush things.</h4>
+        <img src="poopy.png" alt="Snoopy" class="snoopy">
+      `;
+      break;
+    case 3:
+      content.innerHTML = `
+        <h2>🐾🐾</h2>
+        <h4>Last Sunday, I didn’t even wanna go home kasi I wanted to spend more time with you and talk more. I even thought of asking if we could go to Robinson, just the two of us, pero I wasn’t sure if you’d be okay with it. It’s kinda funny na I can do so many things, like write a letter, code, even mess with NFC cards, pero when it <br>comes to saying things directly to you,<br>wala, I just can’t hahaha.</h4>
+        <img src="sny4.png" alt="Snoopy" class="snoopy">
+      `;
+      break;
+    case 4:
+      content.innerHTML = `
+        <h2>🐾🐾🐾</h2>
+        <h4>I know you’ve turned me down a couple of times, but I can’t just give up on someone like you. What I like about you isn’t only your eyes, your voice, your small hands, or your music taste—it’s also how determined you are, the way you handle your emotions, even your angry side, and especially your personality. I know you sometimes feel like your personality isn’t that great, but for me,<br> that’s one of the best things about you.</h4>
+        <img src="sny6.png" alt="Snoopy" class="snoopy">
+      `;
+      break;
+    case 5:
+      content.innerHTML = `
+        <h2>🐾🐾🐾🐾</h2>
+        <h4>I also wanna know more about you—your stories, your dreams, and the things that make you laugh. And if ever we get the chance, I’ll listen to you, be honest with you, reassure you, fight for you, laugh with you, cry with you, be quiet with you, hold your hands, pray for you, be gentle with you, support you, protect you, and I will choose you every time. I will hold your bags kahit hindi mo pa sabihin saakin, I’ll do your homework and teach you the parts of the lesson you didn’t get, help you make ideas, and I will spend my time helping you with everything you struggle with. I’d love to hang out and maybe even travel to places you haven’t been, just for fun and good <br> memories.
+</h4>
+        <img src="carsnoopy.png" alt="Snoopy" class="snoopy">
+      `;
+      break;
+    case 6:
+      content.innerHTML = `
+        <h2>🐾🐾🐾🐾🐾</h2>
+        <h4>I'm really glad that we met, kasi if I hadn’t met you, I wouldn’t be like this HAHAHA. You gave me hope, you made me not give up easily, you motivate me, you make me even stronger, especially when it comes <br> to emotions and feelings. I even control my <br> anger because I know that you don't like it  when <br> I get upset.</h4>
+        <img src="yello.png" alt="Snoopy" class="snoopy">
+      `;
+      break;
+    case 7:
+      content.innerHTML = `
+        <h2>🐾🐾🐾🐾🐾🐾</h2>
+        <h4>Anyway I hope that you always be good and better. Byee (I’m not saying na goodbye ah we still gonna see each other I just don’t know how to end it lol)</h4>
+        <h5>Goodluck <3</h5>
+        <img src="byeno.png" alt="Snoopy" class="snoopy">
+      `;
+      break;
+  }
+}
+
+function nextPage() { page++; if(page>7) page=1; showPage(); }
+function prevPage() { page--; if(page<1) page=7; showPage(); }
+
+function playMusic() {
+  const music = document.getElementById('bg-music');
+  music.play().then(() => {
+    document.getElementById('play-music-btn').style.display = 'none';
+  }).catch(err => console.log("Audio failed:", err));
+}
+
+showPage();
+
+// Flying images
+const bg = document.getElementById("bg-marquee");
+function createFlyingImage(src, direction) {
+  const img = document.createElement("img");
+  img.src = src;
+  img.className = "marquee-img";
+  img.style.top = Math.random() * 70 + 5 + "vh";
+  img.style.left = direction==="right" ? "-150px" : window.innerWidth+"px";
+  bg.appendChild(img);
+
+  let speed = Math.random()*3 + 2;
+  function animate() {
+    let currentLeft = parseFloat(img.style.left);
+    if(direction==="right") {
+      currentLeft += speed;
+      if(currentLeft > window.innerWidth) { currentLeft=-150; img.style.top=Math.random()*70+5+"vh"; speed=Math.random()*3+2; }
+    } else {
+      currentLeft -= speed;
+      if(currentLeft < -150) { currentLeft=window.innerWidth; img.style.top=Math.random()*70+5+"vh"; speed=Math.random()*3+2; }
+    }
+    img.style.left = currentLeft+"px";
+    requestAnimationFrame(animate);
+  }
+  animate();
+}
+
+for(let i=0;i<5;i++){
+  createFlyingImage("fly.png","right");
+  createFlyingImage("para.png","left");
+}
+</script>
+</body>
+</html>
